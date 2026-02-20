@@ -1,0 +1,32 @@
+{
+    "version": "1.0",
+    "task": "360_car_showcase_video",
+    "scene_description": "Professional automotive showcase studio with neutral background",
+    "camera_movement": {
+        "type": "360_rotation",
+        "direction": "clockwise",
+        "speed": "smooth_constant",
+        "duration": "8_seconds"
+    },
+    "platform": {
+        "type": "rotating_turntable",
+        "visibility": "subtle",
+        "material": "reflective_dark_surface"
+    },
+    "lighting": {
+        "setup": "three_point_professional_studio",
+        "quality": "soft_diffused"
+    },
+    "audio": {
+        "type": "ambient_professional",
+        "elements": [
+            "subtle_mechanical_rotation",
+            "clean_studio_ambience"
+        ]
+    },
+    "technical": {
+        "aspect_ratio": "16:9",
+        "quality": "1080p",
+        "smoothness": "high_frame_rate"
+    }
+}

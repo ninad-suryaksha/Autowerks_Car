@@ -1,0 +1,19 @@
+{
+    "version": "1.0",
+    "task": "car_color_modification",
+    "instructions": {
+        "base_instruction": "Modify the color and finish of the car in this image while maintaining all other aspects including lighting, shadows, reflections, background, and car details.",
+        "preservation_rules": [
+            "Maintain original lighting conditions",
+            "Preserve background unchanged",
+            "Keep all car details (wheels, windows, trim) intact",
+            "Maintain realistic reflections appropriate to the finish",
+            "Ensure photorealistic result"
+        ]
+    },
+    "quality_parameters": {
+        "resolution": "high",
+        "photorealism_level": "maximum",
+        "color_accuracy": "precise"
+    }
+}
