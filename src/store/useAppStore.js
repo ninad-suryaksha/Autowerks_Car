@@ -9,6 +9,14 @@ const useAppStore = create((set, get) => ({
     uploadedImages: [],
     setUploadedImages: (images) => set({ uploadedImages: images }),
     clearUploadedImages: () => set({ uploadedImages: [] }),
+    removeUploadedImage: (id) =>
+        set((state) => {
+            const removed = state.uploadedImages.find((img) => img.id === id);
+            if (removed?.preview) URL.revokeObjectURL(removed.preview);
+            return {
+                uploadedImages: state.uploadedImages.filter((img) => img.id !== id),
+            };
+        }),
 
     // === Customization State ===
     selectedColor: null,

@@ -37,7 +37,9 @@ export default async function generateVideoHandler(req, res) {
             duration: 8,
         };
 
-        // Pass the first Nano Banana image as a reference image
+        // Pass the first Nano Banana image (Front View) as the reference image.
+        // Replicate's Veo 3.1 schema only takes a single 'image' parameter,
+        // so we use the best hero shot (Front View, images[0]) to drive the generation.
         if (images && images.length > 0) {
             try {
                 const img = images[0];

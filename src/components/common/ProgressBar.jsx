@@ -14,10 +14,14 @@ const ProgressBar = ({ progress = 0, label = '' }) => {
                     </span>
                 </div>
             )}
-            <div className="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
+            <div className="w-full h-2 bg-gray-50 rounded-full overflow-hidden shadow-inner">
                 <div
-                    className="h-full bg-primary rounded-full transition-all duration-500 ease-out"
-                    style={{ width: `${Math.min(progress, 100)}%` }}
+                    className="h-full rounded-full transition-all duration-500 ease-out shadow-sm"
+                    style={{
+                        width: `${Math.min(progress, 100)}%`,
+                        background: '#6366f1',
+                        backgroundImage: 'linear-gradient(to right, #6366f1, #a855f7, #d946ef, #fca5a5)'
+                    }}
                 />
             </div>
         </div>

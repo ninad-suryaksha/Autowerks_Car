@@ -12,15 +12,20 @@ const ImageGallery = ({ images, originalImages }) => {
             <h3 className="text-lg font-semibold text-text-primary">
                 Generated Images
             </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                {images.map((image, index) => (
-                    <ImageCard
-                        key={index}
-                        image={image}
-                        index={index}
-                        original={originalImages?.[index]}
-                    />
-                ))}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                {images.map((image, index) => {
+                    const viewLabels = ['Front View', 'Left Profile', 'Right Profile', 'Rear View'];
+                    const viewLabel = viewLabels[index] || `View ${index + 1}`;
+                    return (
+                        <ImageCard
+                            key={index}
+                            image={image}
+                            index={index}
+                            label={viewLabel}
+                            original={originalImages?.[index]}
+                        />
+                    );
+                })}
             </div>
         </div>
     );

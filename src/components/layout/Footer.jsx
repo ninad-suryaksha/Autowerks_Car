@@ -5,7 +5,7 @@ const Footer = () => {
         <footer className="bg-surface border-t border-gray-100 py-6 mt-auto">
             <div className="max-w-6xl mx-auto px-6 text-center">
                 <p className="text-sm text-text-secondary">
-                    © 2026 Autowerks. Powered by Google Gemini AI.
+                    © 2026 Autowerks. Powered by ShopOS Pro.
                 </p>
             </div>
         </footer>

@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { X } from 'lucide-react';
 import Container from '../components/layout/Container';
 import CustomizationPanel from '../components/customization/CustomizationPanel';
 import Button from '../components/common/Button';
@@ -14,6 +15,7 @@ const CustomizePage = () => {
     const setSelectedColor = useAppStore((s) => s.setSelectedColor);
     const setSelectedFinish = useAppStore((s) => s.setSelectedFinish);
     const setCurrentStep = useAppStore((s) => s.setCurrentStep);
+    const removeUploadedImage = useAppStore((s) => s.removeUploadedImage);
 
     useEffect(() => {
         setCurrentStep(2);
@@ -47,14 +49,23 @@ const CustomizePage = () => {
                 </div>
 
                 {/* Uploaded images mini preview */}
-                <div className="flex gap-2 mb-6 overflow-x-auto pb-2">
+                <div className="flex gap-3 mb-6 overflow-x-auto pb-2 pt-2 px-1">
                     {uploadedImages.map((img) => (
-                        <div key={img.id} className="relative group">
+                        <div key={img.id} className="relative group shrink-0">
                             <img
                                 src={img.preview}
                                 alt="Car"
-                                className="w-24 h-24 object-cover rounded-2xl border border-gray-200 shrink-0 shadow-sm group-hover:shadow-md transition-all"
+                                className="w-24 h-24 object-cover rounded-2xl border border-gray-200 shadow-sm group-hover:shadow-md transition-all"
                             />
+                            <button
+                                onClick={() => removeUploadedImage(img.id)}
+                                className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 shadow-md opacity-0 group-hover:opacity-100 transition-opacity z-10 hover:bg-red-600 focus:opacity-100"
+                                aria-label="Remove image"
+                                title="Remove image"
+                                type="button"
+                            >
+                                <X size={14} strokeWidth={3} />
+                            </button>
                         </div>
                     ))}
                 </div>

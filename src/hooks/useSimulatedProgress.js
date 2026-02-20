@@ -12,31 +12,40 @@ export const useSimulatedProgress = (isLoading, startValue = 30) => {
 
     useEffect(() => {
         if (isLoading) {
-            // Instant jump to start value
-            setProgress(startValue);
+            setProgress(0);
+            let currentProgress = 0;
+            const targetRamp = startValue; // Usually 30
 
             // Clear any existing interval
             if (intervalRef.current) clearInterval(intervalRef.current);
 
-            // Start incrementing
+            // Phase 1: Speed Ramp (0 to targetRamp)
+            // We use a shorter interval for smooth animation
             intervalRef.current = setInterval(() => {
-                setProgress((prev) => {
-                    // Cap at 90% to wait for actual completion
-                    if (prev >= 90) {
-                        return 90;
+                if (currentProgress < targetRamp) {
+                    // Acceleration logic: small steps at start, larger towards the end
+                    // Between 0-10: increment ~0.5
+                    // Between 10-30: increment ~1.5
+                    const increment = currentProgress < 10 ? 0.4 : 1.6;
+                    currentProgress = Math.min(currentProgress + increment, targetRamp);
+                    setProgress(currentProgress);
+                } else {
+                    // Phase 2: Slow Maintenance (targetRamp to 90)
+                    // Once we hit the ramp target, switch to slower random increments
+                    // This happens within the same interval but at a lower effective rate
+                    // (We could switch intervals but simpler to just gate it with a counter or random chance)
+                    if (Math.random() > 0.9) { // Only increment roughly every 10 ticks (~500ms effective)
+                        const slowIncrement = Math.random() * 1.5 + 0.5;
+                        currentProgress = Math.min(currentProgress + slowIncrement, 90);
+                        setProgress(currentProgress);
                     }
-                    // Add random small increment (1-3%)
-                    const increment = Math.random() * 2 + 1;
-                    return Math.min(prev + increment, 90);
-                });
-            }, 800); // Update every 800ms
+                }
+            }, 50); // High frequency (50ms) for Phase 1 smoothness
         } else {
             // When loading stops, if we were progressing, jump to 100
             if (progress > 0 && progress < 100) {
                 setProgress(100);
             } else if (progress === 100) {
-                // Optional: after a delay, reset to 0? 
-                // For now, let the consuming component handle unmounting/resetting via new isLoading flow
             } else {
                 setProgress(0);
             }

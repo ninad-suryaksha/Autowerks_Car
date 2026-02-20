@@ -7,10 +7,10 @@
  */
 export default async function generateImagesHandler(req, res) {
     try {
-        const { image, prompt } = req.body;
+        const { images, prompt } = req.body;
 
-        if (!image || !prompt) {
-            return res.status(400).json({ error: 'Missing image or prompt' });
+        if (!images || !Array.isArray(images) || images.length === 0 || !prompt) {
+            return res.status(400).json({ error: 'Missing images array or prompt' });
         }
 
         const apiKey = process.env.GEMINI_API_KEY;
@@ -22,23 +22,29 @@ export default async function generateImagesHandler(req, res) {
 
         const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-pro-image-preview:generateContent?key=${apiKey}`;
 
+        const imageParts = images.map(img => ({
+            inline_data: {
+                mime_type: img.mimeType,
+                data: img.base64,
+            },
+        }));
+
         const requestBody = {
             contents: [
                 {
                     parts: [
                         { text: prompt },
-                        {
-                            inline_data: {
-                                mime_type: image.mimeType,
-                                data: image.base64,
-                            },
-                        },
+                        ...imageParts
                     ],
                 },
             ],
             generationConfig: {
-                responseModalities: ['TEXT', 'IMAGE'],
-                temperature: 0.4,
+                // responseModalities: ['TEXT', 'IMAGE'],
+                responseModalities: ['IMAGE'],
+                temperature: 0.8,
+                imageConfig: {
+                    imageSize: "2K"
+                }
             },
         };
 
